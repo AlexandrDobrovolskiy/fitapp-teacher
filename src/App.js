@@ -1,21 +1,19 @@
 import React, { Component } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+} from 'react-router-dom'
+
+import { routes } from "./constants";
+
+import { HomePage, SignInPage } from "./components"
 
 class App extends Component {
-
-
-  componentDidMount = () => {
-    console.log("hello");
-
-    const a = {
-      asd: 12312312
-    } 
-  }
-
   render() {
     return (
-      <div className="App">
-        shit, hi
-      </div>
+      <Router>
+        <Route extact path={routes.SIGN_IN} component={SignInPage}/>
+      </Router>
     );
   }
 }
