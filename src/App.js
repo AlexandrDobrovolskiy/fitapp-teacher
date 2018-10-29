@@ -1,21 +1,26 @@
-import React, { Component } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-} from 'react-router-dom'
+import React from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import { routes } from "./constants";
 
-import { HomePage, SignInPage } from "./components"
+import { HomePage, SignInPage, AppBar } from "./components";
+import { PrivateRoute } from "./utils";
 
-class App extends Component {
-  render() {
-    return (
-      <Router>
-        <Route extact path={routes.SIGN_IN} component={SignInPage}/>
-      </Router>
-    );
-  }
-}
+const App = ({ authenticated, checked }) => (
+  <Router>
+    {checked && (
+      <>
+        {authenticated && <AppBar />}
+        <Route extact path={routes.SIGN_IN} component={SignInPage} />
+        <PrivateRoute
+          exact
+          path={routes.HOME}
+          component={HomePage}
+          authenticated={authenticated}
+        />
+      </>
+    )}
+  </Router>
+);
 
 export default App;
