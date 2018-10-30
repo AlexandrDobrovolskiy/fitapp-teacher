@@ -1,4 +1,4 @@
-import HomePage from "./HomePage"
+import HomePage from "./Home/HomePage"
 import SignInPage from "./Auth/SignInPage"
 import AppBar from "./AppBar/AppBar"
 

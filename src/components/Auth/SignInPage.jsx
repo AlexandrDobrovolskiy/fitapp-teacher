@@ -1,7 +1,10 @@
 import React, { Fragment, Component } from "react";
 import PropTypes from "prop-types";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 
 import withStyles from "@material-ui/core/styles/withStyles";
+import { doExample } from "./actions";
 
 import styles from "./styles";
 import {
@@ -25,10 +28,26 @@ class SignInPage extends Component {
 
   state = {
     phone: "",
-    password: ""
+    password: "",
+    shouldRememder: false
   };
 
-  handleSubmit = () => {};
+  handleInputChange = name => event => {
+    const { value } = event.target;
+    this.setState({ [name]: value });
+  };
+
+  handleSelectChange = name => event => {
+    const { checked } = event.target;
+    this.setState({ [name]: checked });
+  };
+
+  handleSubmit = (event) => {
+    const { phone, password, shouldRememder } = this.state;
+    this.props.login();
+
+    event.preventDefault();
+  };
 
   render() {
     const { classes } = this.props;
@@ -47,12 +66,12 @@ class SignInPage extends Component {
             <form className={classes.form}>
               <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="phone">Phone</InputLabel>
-                <Input 
-                  id="phone" 
-                  name="phone" 
-                  autoComplete="phone" 
-                  autoFocus 
-                  onChange={()=>{}}
+                <Input
+                  id="phone"
+                  name="phone"
+                  autoComplete="phone"
+                  autoFocus
+                  onChange={this.handleInputChange("phone")}
                 />
               </FormControl>
               <FormControl margin="normal" required fullWidth>
@@ -62,10 +81,17 @@ class SignInPage extends Component {
                   type="password"
                   id="password"
                   autoComplete="current-password"
+                  onChange={this.handleInputChange("password")}
                 />
               </FormControl>
               <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
+                control={
+                  <Checkbox
+                    value="remember"
+                    color="primary"
+                    onChange={this.handleSelectChange("shouldRememder")}
+                  />
+                }
                 label="Remember me"
               />
               <Button
@@ -74,8 +100,10 @@ class SignInPage extends Component {
                 variant="contained"
                 color="primary"
                 className={classes.submit}
+                onClick={this.handleSubmit}
               >
                 Sign in
+                
               </Button>
             </form>
           </Paper>
@@ -85,4 +113,10 @@ class SignInPage extends Component {
   }
 }
 
-export default withStyles(styles)(SignInPage);
+const mapState = ({ auth }) => auth;
+
+const mapDispatch = dispatch => bindActionCreators({
+  doExample
+}, dispatch)
+
+export default connect(mapState, mapDispatch)(withStyles(styles)(SignInPage));

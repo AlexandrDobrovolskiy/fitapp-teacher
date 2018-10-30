@@ -10,6 +10,9 @@ const defaultTheme = createMuiTheme({
   status: {
     danger: 'orange',
   },
+  typography: {
+    useNextVariants: true,
+  },
 });
 
 export default defaultTheme;
