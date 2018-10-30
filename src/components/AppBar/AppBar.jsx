@@ -19,7 +19,7 @@ import  {
   MailIcon,
   NotificationsIcon,
   MoreIcon
-} from "elements/@material";
+} from "lib/elements/@material";
 
 
 class PrimarySearchAppBar extends React.Component {

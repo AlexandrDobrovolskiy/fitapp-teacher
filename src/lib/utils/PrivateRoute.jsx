@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Route, Redirect } from "react-router-dom";
 
-import { routes } from "../constants";
+import { routes } from "../../constants";
 
 const PrivateRoute = ({ component, exact = false, path, authenticated }) => (
   <Route
