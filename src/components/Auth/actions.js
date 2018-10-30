@@ -1,15 +1,4 @@
-import { sessionService } from "redux-react-session";
+// import { sessionService } from "redux-react-session";
+// import { call } from "lib/api";
+// import { endpoints, actionTypes } from "../../constants";
 
-
-export const doExample = () => {
-  return async dispatch => {
-    const user = await Promise.resolve("This is new data");
-    const error = await Promise.resolve("This is new error");
-
-    return dispatch({
-      type: "EXAMPLE",
-      data: user,
-      error
-    })
-  }
-}
