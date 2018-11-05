@@ -2,7 +2,8 @@ import { combineReducers } from 'redux'
 
 import storage from 'redux-persist/lib/storage'
 import { persistReducer } from 'redux-persist'
-import { sessionReducer as session } from 'redux-react-session'
+
+import session from "./components/Auth/reducer";
 
 const rootPersistConfig = {
   key: 'root',
@@ -10,7 +11,7 @@ const rootPersistConfig = {
 }
 
 const rootReducer = combineReducers({
-  session,
+  session
 });
 
 export default persistReducer(rootPersistConfig, rootReducer);

@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { bindActionCreators } from 'redux';
+import { connect } from "react-redux";
+import  { signOut } from "../Auth/actions";
+
 import { withStyles } from '@material-ui/core/styles';
 import styles from "./styles";
-
 import  {
   MaterialAppBar,
   Toolbar,
@@ -20,7 +23,6 @@ import  {
   NotificationsIcon,
   MoreIcon
 } from "lib/elements/@material";
-
 
 class PrimarySearchAppBar extends React.Component {
   static propTypes = {
@@ -49,6 +51,11 @@ class PrimarySearchAppBar extends React.Component {
     this.setState({ mobileMoreAnchorEl: null });
   };
 
+  handleSignOut = () => {
+    const { token, signOut } = this.props;
+    signOut(token);
+  }
+
   render() {
     const { anchorEl, mobileMoreAnchorEl } = this.state;
     const { classes } = this.props;
@@ -64,7 +71,7 @@ class PrimarySearchAppBar extends React.Component {
         onClose={this.handleMenuClose}
       >
         <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
-        <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
+        <MenuItem onClick={this.handleSignOut}>Sign out</MenuItem>
       </Menu>
     );
 
@@ -158,4 +165,14 @@ class PrimarySearchAppBar extends React.Component {
   }
 }
 
-export default withStyles(styles)(PrimarySearchAppBar);
+const mapState = ({ session }) => ({
+  token: session.user.token
+})
+
+const mapDispatch = dispatch => bindActionCreators({
+  signOut
+}, dispatch)
+
+const Styled = withStyles(styles)(PrimarySearchAppBar);
+
+export default connect(mapState, mapDispatch)(Styled);

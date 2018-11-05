@@ -1,10 +1,13 @@
 import React, { Fragment, Component } from "react";
+import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
+
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
 import withStyles from "@material-ui/core/styles/withStyles";
-import { doExample } from "./actions";
+import { signIn, resetError } from "./actions";
+import { routes } from "../../constants";
 
 import styles from "./styles";
 import {
@@ -29,7 +32,7 @@ class SignInPage extends Component {
   state = {
     phone: "",
     password: "",
-    shouldRememder: false
+    shouldRememder: true
   };
 
   handleInputChange = name => event => {
@@ -43,14 +46,39 @@ class SignInPage extends Component {
   };
 
   handleSubmit = (event) => {
-    const { phone, password, shouldRememder } = this.state;
-    this.props.login();
-
+    const { phone, password } = this.state;
+    const { signIn } = this.props;
+    signIn(phone, password);
+    
     event.preventDefault();
   };
 
+  componentDidMount = () => {
+    const { resetError } = this.props;
+    window.addEventListener('beforeunload', () => {
+      resetError();
+    })
+  }
+  
+
+  componentWillUnmount = () => {
+    const { resetError } = this.props;
+    resetError();
+  };
+  
+
   render() {
-    const { classes } = this.props;
+    const { classes, authenticated, error } = this.props;
+
+    if(authenticated){
+      return (
+        <Redirect
+          to={{
+            pathname: routes.HOME,
+          }}
+        />
+      )
+    }
 
     return (
       <Fragment>
@@ -89,11 +117,13 @@ class SignInPage extends Component {
                   <Checkbox
                     value="remember"
                     color="primary"
+                    defaultChecked={true}
                     onChange={this.handleSelectChange("shouldRememder")}
                   />
                 }
                 label="Remember me"
               />
+              {!!error && error}
               <Button
                 type="submit"
                 fullWidth
@@ -113,10 +143,11 @@ class SignInPage extends Component {
   }
 }
 
-const mapState = ({ auth }) => auth;
+const mapState = ({ session }) => session;
 
 const mapDispatch = dispatch => bindActionCreators({
-  doExample
+  signIn,
+  resetError
 }, dispatch)
 
 export default connect(mapState, mapDispatch)(withStyles(styles)(SignInPage));
