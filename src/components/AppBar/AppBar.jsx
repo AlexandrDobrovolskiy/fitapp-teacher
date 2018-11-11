@@ -1,13 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import { bindActionCreators } from 'redux';
+import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import  { signOut } from "../Auth/actions";
+import { signOut } from "../Auth/actions";
+import { toggleDrawer } from "../SideBar/actions";
 
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from "@material-ui/core/styles";
 import styles from "./styles";
-import  {
+import {
   MaterialAppBar,
   Toolbar,
   IconButton,
@@ -23,15 +24,16 @@ import  {
   NotificationsIcon,
   MoreIcon
 } from "lib/elements/@material";
+import { Icon } from "@material-ui/core";
 
 class PrimarySearchAppBar extends React.Component {
   static propTypes = {
     classes: PropTypes.object.isRequired
-  }
+  };
 
   state = {
     anchorEl: null,
-    mobileMoreAnchorEl: null,
+    mobileMoreAnchorEl: null
   };
 
   handleProfileMenuOpen = event => {
@@ -54,19 +56,20 @@ class PrimarySearchAppBar extends React.Component {
   handleSignOut = () => {
     const { token, signOut } = this.props;
     signOut(token);
-  }
+  };
 
   render() {
     const { anchorEl, mobileMoreAnchorEl } = this.state;
     const { classes } = this.props;
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+    const { drawer, toggleDrawer } = this.props;
 
     const renderMenu = (
       <Menu
         anchorEl={anchorEl}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        transformOrigin={{ vertical: "top", horizontal: "right" }}
         open={isMenuOpen}
         onClose={this.handleMenuClose}
       >
@@ -78,8 +81,8 @@ class PrimarySearchAppBar extends React.Component {
     const renderMobileMenu = (
       <Menu
         anchorEl={mobileMoreAnchorEl}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        transformOrigin={{ vertical: "top", horizontal: "right" }}
         open={isMobileMenuOpen}
         onClose={this.handleMobileMenuClose}
       >
@@ -112,10 +115,20 @@ class PrimarySearchAppBar extends React.Component {
       <div className={classes.root}>
         <MaterialAppBar position="static">
           <Toolbar>
-            <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
-              <MenuIcon />
+            <IconButton
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="Open drawer"
+              onClick={toggleDrawer}
+            >
+              {drawer.open ? <Icon>arrow_back</Icon> : <MenuIcon />}
             </IconButton>
-            <Typography className={classes.title} variant="h6" color="inherit" noWrap>
+            <Typography
+              className={classes.title}
+              variant="h6"
+              color="inherit"
+              noWrap
+            >
               Fitapp Teacher
             </Typography>
             <div className={classes.search}>
@@ -126,7 +139,7 @@ class PrimarySearchAppBar extends React.Component {
                 placeholder="Search…"
                 classes={{
                   root: classes.inputRoot,
-                  input: classes.inputInput,
+                  input: classes.inputInput
                 }}
               />
             </div>
@@ -143,7 +156,7 @@ class PrimarySearchAppBar extends React.Component {
                 </Badge>
               </IconButton>
               <IconButton
-                aria-owns={isMenuOpen ? 'material-appbar' : undefined}
+                aria-owns={isMenuOpen ? "material-appbar" : undefined}
                 aria-haspopup="true"
                 onClick={this.handleProfileMenuOpen}
                 color="inherit"
@@ -152,7 +165,11 @@ class PrimarySearchAppBar extends React.Component {
               </IconButton>
             </div>
             <div className={classes.sectionMobile}>
-              <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} color="inherit">
+              <IconButton
+                aria-haspopup="true"
+                onClick={this.handleMobileMenuOpen}
+                color="inherit"
+              >
                 <MoreIcon />
               </IconButton>
             </div>
@@ -167,13 +184,21 @@ class PrimarySearchAppBar extends React.Component {
 
 const mapState = ({ session, drawer }) => ({
   token: session.user.token,
-  drawerOpen: drawer.open
-})
+  drawer
+});
 
-const mapDispatch = dispatch => bindActionCreators({
-  signOut
-}, dispatch)
+const mapDispatch = dispatch =>
+  bindActionCreators(
+    {
+      signOut,
+      toggleDrawer
+    },
+    dispatch
+  );
 
 const Styled = withStyles(styles)(PrimarySearchAppBar);
 
-export default connect(mapState, mapDispatch)(Styled);
+export default connect(
+  mapState,
+  mapDispatch
+)(Styled);
