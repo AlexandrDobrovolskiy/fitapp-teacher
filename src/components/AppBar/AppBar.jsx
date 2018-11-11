@@ -165,8 +165,9 @@ class PrimarySearchAppBar extends React.Component {
   }
 }
 
-const mapState = ({ session }) => ({
-  token: session.user.token
+const mapState = ({ session, drawer }) => ({
+  token: session.user.token,
+  drawerOpen: drawer.open
 })
 
 const mapDispatch = dispatch => bindActionCreators({

@@ -8,11 +8,13 @@ import { routes } from "./constants";
 
 import { HomePage, SignInPage, AppBar } from "./components";
 import { defaultTheme } from "./lib/themes";
+import GroupsPage from "./components/Groups/GroupsPage";
 
 const App = ({ authenticated }) => {
   return (
     <Router>
       <MuiThemeProvider theme={defaultTheme}>
+        <>
         {authenticated && <AppBar />}
         <Route extact path={routes.SIGN_IN} component={SignInPage} />
         <PrivateRoute
@@ -21,6 +23,13 @@ const App = ({ authenticated }) => {
           component={HomePage}
           authenticated={authenticated}
         />
+        <PrivateRoute
+          exact
+          path={routes.GROUPS}
+          component={GroupsPage}
+          authenticated={authenticated}
+        />
+        </>
       </MuiThemeProvider>
     </Router>
   );
