@@ -1,6 +1,8 @@
-import React from "react";
+import React, { Component } from "react";
+import PropTypes from 'prop-types'
+
 import { connect } from "react-redux";
-import { toggleDrawer } from "./actions";
+import { toggleDrawer, registrDrawer } from "./actions";
 import { bindActionCreators } from "redux";
 
 const mapState = ({ drawer }) => ({
@@ -10,31 +12,51 @@ const mapState = ({ drawer }) => ({
 const mapDispatch = dispatch =>
   bindActionCreators(
     {
-      toggleDrawer
+      toggleDrawer,
+      registrDrawer
     },
     dispatch
   );
 
 export const withDrawer = Drawer => Consumer => {
-  const ComposeWithDrawer = ({ open, toggleDrawer }) => {
-    const handleClose = () => {
-      if (open) {
-        toggleDrawer();
+
+  class ComposeWithDrawer extends Component {
+    static propTypes = {
+      open: PropTypes.bool.isRequired,
+      toggleDrawer: PropTypes.func.isRequired,
+      registrDrawer: PropTypes.func.isRequired,
+    }
+    handleClose = () => {
+      const { open, toggleDrawer } = this.props;
+      if (!open) {
+        return;
       }
+
+      toggleDrawer();
     };
 
-    return (
-      <>
-        <Drawer open={open} toggle={toggleDrawer} />
-        <div 
-          style={{ marginLeft: "73px" }} 
-          onClick={handleClose}
-        >
-          <Consumer toggleDrawer={toggleDrawer} />
-        </div>
-      </>
-    );
-  };
+    componentDidMount = () => {
+      const { registrDrawer } = this.props;
+      registrDrawer();
+    };
+    
+
+    render() {
+      const { open, toggleDrawer } = this.props;
+      return (
+        <>
+          <Drawer open={open} toggle={toggleDrawer} />
+          <div 
+            style={{ marginLeft: "73px" }} 
+            onClickCapture={this.handleClose}
+          >
+            <Consumer toggleDrawer={toggleDrawer} />
+          </div>
+        </>
+      );
+    }
+
+  }
 
   return connect(
     mapState,

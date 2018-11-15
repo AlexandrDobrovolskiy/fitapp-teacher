@@ -16,5 +16,5 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(...middleware))
 );
 
-export const persistor = persistStore(store);
-export { store };
+const persistor = persistStore(store);
+export { store, persistor };

@@ -115,14 +115,16 @@ class PrimarySearchAppBar extends React.Component {
       <div className={classes.root}>
         <MaterialAppBar position="static">
           <Toolbar>
-            <IconButton
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="Open drawer"
-              onClick={toggleDrawer}
-            >
-              {drawer.open ? <Icon>arrow_back</Icon> : <MenuIcon />}
-            </IconButton>
+            {drawer.exist && (
+              <IconButton
+                className={classes.menuButton}
+                color="inherit"
+                aria-label="Open drawer"
+                onClick={toggleDrawer}
+              >
+                {drawer.open ? <Icon>arrow_back</Icon> : <MenuIcon />}
+              </IconButton>
+            )}
             <Typography
               className={classes.title}
               variant="h6"

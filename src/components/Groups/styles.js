@@ -6,20 +6,22 @@ export const styles = theme => ({
     flexShrink: 0,
     zIndex: theme.zIndex.drawer,
     whiteSpace: 'nowrap',
-    top: "auto"
   },
   drawerOpen: {
     width: drawerWidth,
+    top: 64,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
   drawerClose: {
+    top: 64,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+    backgroundColor: "rgba(0,0,0,0)",
     overflowX: 'hidden',
     width: theme.spacing.unit * 7 + 1,
     [theme.breakpoints.up('sm')]: {
@@ -36,8 +38,5 @@ export const styles = theme => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
-  },
-  drawerPaper: {
-    width: drawerWidth,
   },
 });
