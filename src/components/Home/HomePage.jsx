@@ -3,7 +3,12 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import { getDaySchedule } from "../Schedule/actions";
+import {
+  getDaySchedule,
+  editLesson,
+  deleteLesson,
+  createLesson
+} from "lib/actions";
 
 import {
   Typography,
@@ -29,8 +34,22 @@ class HomePage extends Component {
     getDaySchedule(token);
   };
 
+  getEditLessonHandler = () => {
+    const { token, editLesson } = this.props;
+    return params => {
+      editLesson(token, params);
+    };
+  };
+
+  getDeleteLessonHandler = () => {
+    const { token, deleteLesson } = this.props;
+    return params => {
+      deleteLesson(token, params);
+    };
+  };
+
   render() {
-    const { classes, todaySchedule } = this.props;
+    const { classes, todaySchedule, token } = this.props;
     return (
       <div className={classes.root}>
         <CssBaseline />
@@ -45,7 +64,13 @@ class HomePage extends Component {
             }
           >
             {todaySchedule.map((lesson, index) => (
-              <ScheduleItem lesson={lesson} key={index} />
+              <ScheduleItem
+                lesson={lesson}
+                key={index}
+                token={token}
+                onEdit={this.getEditLessonHandler}
+                onDelete={this.getDeleteLessonHandler}
+              />
             ))}
           </List>
         </Paper>
@@ -62,7 +87,10 @@ const mapState = ({ session, schedule }) => ({
 const mapDispatch = dispatch =>
   bindActionCreators(
     {
-      getDaySchedule
+      getDaySchedule,
+      createLesson,
+      editLesson,
+      deleteLesson
     },
     dispatch
   );

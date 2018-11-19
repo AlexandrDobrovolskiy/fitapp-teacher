@@ -6,14 +6,13 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
 import withStyles from "@material-ui/core/styles/withStyles";
-import { signIn, resetError } from "./actions";
+import { signIn, resetError } from "lib/actions";
 import { routes } from "../../constants";
 
 import styles from "./styles";
 import {
   CssBaseline,
   Paper,
-  LockIcon,
   Avatar,
   Typography,
   FormControl,
@@ -22,7 +21,8 @@ import {
   Input,
   Checkbox,
   Button
-} from "lib/elements/@material";
+} from "@material-ui/core";
+import LockIcon from "@material-ui/icons/Lock"; 
 
 class SignInPage extends Component {
   static propTypes = {

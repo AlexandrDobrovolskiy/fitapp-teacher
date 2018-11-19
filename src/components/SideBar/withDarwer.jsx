@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from 'prop-types'
 
 import { connect } from "react-redux";
-import { toggleDrawer, registrDrawer } from "./actions";
+import { toggleDrawer, registrDrawer } from "lib/actions";
 import { bindActionCreators } from "redux";
 
 const mapState = ({ drawer }) => ({

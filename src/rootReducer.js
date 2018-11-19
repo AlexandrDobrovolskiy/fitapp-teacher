@@ -3,9 +3,7 @@ import { combineReducers } from 'redux'
 import storage from 'redux-persist/lib/storage'
 import { persistReducer } from 'redux-persist'
 
-import session from "./components/Auth/reducer";
-import drawer from "./components/SideBar/reducer";
-import schedule from "./components/Schedule/reducer";
+import { drawer, schedule, session, groups } from "lib/reducers";
 
 const rootPersistConfig = {
   key: 'root',
@@ -16,7 +14,8 @@ const rootPersistConfig = {
 const rootReducer = combineReducers({
   session,
   schedule,
-  drawer
+  drawer,
+  groups
 });
 
 export default persistReducer(rootPersistConfig, rootReducer);

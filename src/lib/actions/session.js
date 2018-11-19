@@ -27,7 +27,6 @@ export const signOut = token => {
     const json = await call(endpoints.USERS_LOGOUT, { token });
     let data = json;
     let error = null;
-    console.log(json);
     return dispatch({ type, data, error });
   };
 };

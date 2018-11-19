@@ -3,13 +3,19 @@ import PropTypes from "prop-types";
 
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { signOut } from "../Auth/actions";
-import { toggleDrawer } from "../SideBar/actions";
+import { toggleDrawer, signOut } from "lib/actions";
 
 import { withStyles } from "@material-ui/core/styles";
 import styles from "./styles";
+import MenuIcon from "@material-ui/icons/Menu";
+import MoreIcon from "@material-ui/icons/More";
+import SearchIcon from "@material-ui/icons/Search";
+import NotificationsIcon from "@material-ui/icons/Notifications";
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import GroupIcon from '@material-ui/icons/Group';
+import BookIcon from '@material-ui/icons/Book';
 import {
-  MaterialAppBar,
+  AppBar as MaterialAppBar,
   Toolbar,
   IconButton,
   Typography,
@@ -17,14 +23,8 @@ import {
   Badge,
   MenuItem,
   Menu,
-  MenuIcon,
-  SearchIcon,
-  AccountCircle,
-  MailIcon,
-  NotificationsIcon,
-  MoreIcon
-} from "lib/elements/@material";
-import { Icon } from "@material-ui/core";
+  Icon
+} from "@material-ui/core";
 
 class PrimarySearchAppBar extends React.Component {
   static propTypes = {
@@ -88,14 +88,6 @@ class PrimarySearchAppBar extends React.Component {
       >
         <MenuItem>
           <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <MailIcon />
-            </Badge>
-          </IconButton>
-          <p>Messages</p>
-        </MenuItem>
-        <MenuItem>
-          <IconButton color="inherit">
             <Badge badgeContent={11} color="secondary">
               <NotificationsIcon />
             </Badge>
@@ -131,7 +123,7 @@ class PrimarySearchAppBar extends React.Component {
               color="inherit"
               noWrap
             >
-              Fitapp Teacher
+              FITapp | Teacher
             </Typography>
             <div className={classes.search}>
               <div className={classes.searchIcon}>
@@ -148,14 +140,10 @@ class PrimarySearchAppBar extends React.Component {
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
               <IconButton color="inherit">
-                <Badge badgeContent={4} color="secondary">
-                  <MailIcon />
-                </Badge>
+                  <GroupIcon />
               </IconButton>
               <IconButton color="inherit">
-                <Badge badgeContent={17} color="secondary">
-                  <NotificationsIcon />
-                </Badge>
+                  <BookIcon />
               </IconButton>
               <IconButton
                 aria-owns={isMenuOpen ? "material-appbar" : undefined}

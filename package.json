@@ -35,6 +35,7 @@
     "jest-pnp-resolver": "1.0.1",
     "jest-resolve": "23.6.0",
     "js-sha3": "^0.8.0",
+    "legalize": "^1.3.0",
     "lodash": "^4.17.11",
     "mini-css-extract-plugin": "0.4.3",
     "node-sass": "^4.10.0",
