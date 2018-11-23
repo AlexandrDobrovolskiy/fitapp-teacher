@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { getGroups } from "lib/actions";
-import { format, timeFormat, getLessonNumber, lessonTime } from "lib/utils";
+import { format, timeFormat, getLessonNumber, getLessonTime, toUTC } from "lib/utils";
 import _ from "lodash";
 
 import { lessonTypes } from "../../constants";
@@ -22,12 +22,15 @@ import styles from "./formStyles";
 class ScheduleEditForm extends Component {
   static propTypes = {
     lesson: PropTypes.object.isRequired,
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
+    onValuesChange: PropTypes.func.isRequired
   };
 
   state = {
     ...this.props.lesson,
     group: this.props.lesson.group.id,
+    date: toUTC(this.props.lesson.date),
+    teacher: this.props.lesson.teacher.id
   };
 
   componentDidMount = () => {
@@ -37,18 +40,27 @@ class ScheduleEditForm extends Component {
 
   handleInputChange = name => event => {
     const { value } = event.target;
-    this.setState({ [name]: value });
+    const { onValuesChange } = this.props;
+
+    this.setState({ [name]: value }, () => {
+      onValuesChange(this.state);
+    });
   };
 
   handleTimeChange = e => {
     const { value } = e.target;
     const { date } = this.state;
-    this.setState({date: lessonTime(date, value)})
+    const { onValuesChange } = this.props;
+
+    this.setState({date: getLessonTime(date, value)}, () => {
+      onValuesChange(this.state);
+    })
   }
 
   render() {
     const { title, room, type, date, group } = this.state;
     const { classes, groups } = this.props;
+
     return (
       <form className={classes.form}>
         <Grid container>

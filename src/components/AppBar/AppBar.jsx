@@ -125,7 +125,7 @@ class PrimarySearchAppBar extends React.Component {
             >
               FITapp | Teacher
             </Typography>
-            <div className={classes.search}>
+            {/* {<div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />
               </div>
@@ -136,7 +136,7 @@ class PrimarySearchAppBar extends React.Component {
                   input: classes.inputInput
                 }}
               />
-            </div>
+            </div>} */}
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
               <IconButton color="inherit">

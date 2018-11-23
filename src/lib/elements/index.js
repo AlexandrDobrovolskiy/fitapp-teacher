@@ -1,3 +1,4 @@
-import Modal from "./Modal";
+import Modal from "./Modal/Modal";
+import ToggableIconButton from "./Buttons/ToggableIconButton";
 
-export { Modal };
+export { Modal, ToggableIconButton };

@@ -42,7 +42,7 @@ export const withDrawer = Drawer => Consumer => {
     
 
     render() {
-      const { open, toggleDrawer } = this.props;
+      const { open, toggleDrawer, ...otherProps } = this.props;
       return (
         <>
           <Drawer open={open} toggle={toggleDrawer} />
@@ -50,7 +50,7 @@ export const withDrawer = Drawer => Consumer => {
             style={{ marginLeft: "73px" }} 
             onClickCapture={this.handleClose}
           >
-            <Consumer toggleDrawer={toggleDrawer} />
+            <Consumer toggleDrawer={toggleDrawer} {...otherProps} />
           </div>
         </>
       );

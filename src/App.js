@@ -6,7 +6,7 @@ import { MuiThemeProvider } from "@material-ui/core/styles";
 import { PrivateRoute } from "./lib/utils";
 import { routes } from "./constants";
 
-import { HomePage, SignInPage, AppBar } from "./components";
+import { HomePage, SignInPage, AppBar, ScoreBoardPage } from "./components";
 import { defaultTheme } from "./lib/themes";
 import GroupsPage from "./components/Groups/GroupsPage";
 
@@ -27,6 +27,12 @@ const App = ({ authenticated }) => {
           exact
           path={routes.GROUPS}
           component={GroupsPage}
+          authenticated={authenticated}
+        />
+        <PrivateRoute
+          exact
+          path={routes.SCORE_BOARD}
+          component={ScoreBoardPage}
           authenticated={authenticated}
         />
         </>

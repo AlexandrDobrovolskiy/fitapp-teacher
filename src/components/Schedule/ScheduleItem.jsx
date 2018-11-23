@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { timeFormat } from "lib/utils";
+import { timeFormatUTC } from "lib/utils";
 
 import {
   ListItem,
@@ -34,12 +34,11 @@ class ScheduleItem extends Component {
     end: null,
     deleteModalOpen: false,
     editModalOpen: false,
-    title: "",
-    room: "",
-    teacher: "",
-    date: "",
-    type: "",
-    group: ""
+    edit: {
+      ...this.props.lesson,
+      group: this.props.lesson.group.id,
+      teacher: this.props.lesson.teacher.id
+    }
   };
 
   componentDidMount = () => {
@@ -53,7 +52,7 @@ class ScheduleItem extends Component {
     this.setState({ start, end });
 
     const now = new Date();
-    if (start > now && end < now) {
+    if (start < now && end > now) {
       this.setState({ active: true });
     }
   };
@@ -67,6 +66,10 @@ class ScheduleItem extends Component {
     const { deleteModalOpen } = this.state;
     this.setState({ deleteModalOpen: !deleteModalOpen });
   };
+
+  handleEditFormChange = state => {
+    this.setState({edit: state})
+  }
 
   handleEdit = () => {
     const { id } = this.props.lesson;
@@ -104,7 +107,7 @@ class ScheduleItem extends Component {
         <ListItem elevation={2} button>
           <Typography variant="h6" component="h6">
             <>
-              {timeFormat(this.state.start)}{" - "}{timeFormat(this.state.end)}
+              {timeFormatUTC(this.state.start)}{" - "}{timeFormatUTC(this.state.end)}
             </>
           </Typography>
           <ListItemText primary={<b>{group.name}</b>} secondary={title} />
@@ -152,7 +155,7 @@ class ScheduleItem extends Component {
               toggle={this.toggleEditModal}
               open={editModalOpen}
             >
-              <ScheduleEditForm lesson={lesson}/>
+              <ScheduleEditForm lesson={lesson} onValuesChange={this.handleEditFormChange}/>
             </Modal>
             <IconButton onClick={this.toggleDeleteModal}>
               <Icon>delete</Icon>
@@ -182,7 +185,9 @@ class ScheduleItem extends Component {
                 toggle={this.toggleDeleteModal}
                 open={deleteModalOpen}
               >
+                <Typography variant="h5" component="h2">
                 Ви впевнені, що хочете відмінити заняття?
+                </Typography>
               </Modal>
             </MuiThemeProvider>
           </ListItemSecondaryAction>

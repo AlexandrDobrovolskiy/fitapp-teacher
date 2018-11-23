@@ -1,11 +1,9 @@
 import { call } from "lib/api";
 import { actionTypes as actions, endpoints as api } from "../../constants";
 
-const hours = 4;
-
 export const getDaySchedule = token => {
   const type = actions.SCHEDULE_DAY;
-  let today = new Date(new Date().setDate(new Date().getDate() - 3));
+  let today = new Date(new Date().setDate(new Date().getDate()));
 
   return async dispatch => {
     const json = await call(api.CLASSES_LIST, {

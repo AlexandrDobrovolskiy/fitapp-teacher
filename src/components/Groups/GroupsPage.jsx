@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { withDrawer } from '../SideBar/withDarwer';
+import { withDrawer } from '../../lib/utils/withDarwer';
 import GroupDrawer from './GrupDrawer';
 
 class GroupsPage extends Component {

@@ -1,35 +1,5 @@
 import _ from "lodash";
-
-const scheduleMap = {
-  1: {
-    hours: 9,
-    minutes: 0
-  },
-  2: {
-    hours: 10,
-    minutes: 30
-  },
-  3: {
-    hours: 11,
-    minutes: 50
-  },
-  4: {
-    hours: 13,
-    minutes: 40
-  },
-  5: {
-    hours: 15,
-    minutes: 10
-  },
-  6: {
-    hours: 16,
-    minutes: 40
-  },
-  7: {
-    hours: 19,
-    minutes: 30
-  }
-};
+import { scheduleTimeMap } from "../../constants";
 
 export const format = date => {
   const dateObj = new Date(date);
@@ -45,25 +15,41 @@ export const format = date => {
 export const timeFormat = date => {
   const dateObj = new Date(date);
   return new Date(
+    dateObj.setHours(dateObj.getHours(), dateObj.getMinutes())
+  )
+    .toTimeString()
+    .substr(0, 5);
+};
+
+export const timeFormatUTC = date => {
+  const dateObj = new Date(date);
+  return new Date(
     dateObj.setHours(dateObj.getUTCHours(), dateObj.getUTCMinutes())
   )
     .toTimeString()
     .substr(0, 5);
 };
 
-export const lessonTime = (date, lessonNumber) => {
+export const getLessonTime = (date, lessonNumber) => {
   const dateObj = new Date(date);
-  const { hours, minutes } = scheduleMap[lessonNumber];
+  const { hours, minutes } = scheduleTimeMap[lessonNumber];
   const lesson = new Date(dateObj.setHours(hours, minutes));
 
-  return new Date(new Date().setHours(lesson.getUTCHours(), lesson.getUTCMinutes()));
+  return new Date(new Date().setHours(lesson.getHours(), lesson.getMinutes()));
 };
 
 export const getLessonNumber = date => {
   const dateObj = new Date(date);
 
-  return _.findKey(scheduleMap, {
-    hours: dateObj.getUTCHours(),
-    minutes: dateObj.getUTCMinutes()
+  return _.findKey(scheduleTimeMap, {
+    hours: dateObj.getHours(),
+    minutes: dateObj.getMinutes()
   });
 };
+
+export const toUTC = (date) => {
+  const dateObj = new Date(date);
+  return new Date(
+    dateObj.setHours(dateObj.getUTCHours(), dateObj.getUTCMinutes())
+  )
+}

@@ -9,7 +9,6 @@ import { Drawer } from "@material-ui/core";
 class GroupDrawer extends Component {
   static ptopTypes = {
     classes: PropTypes.object.isRequired,
-    theme: PropTypes.object.isRequired,
     open: PropTypes.bool.isRequired,
     toggle: PropTypes.func.isRequired
   };
