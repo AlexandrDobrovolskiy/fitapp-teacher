@@ -1,4 +1,4 @@
-import {sha3_256} from 'js-sha3';
+import { sha3_256 } from 'js-sha3';
 import toBytes from 'utf8-bytes';
 
 const salt = "34xuRPmCLnN23a1OP6hg";

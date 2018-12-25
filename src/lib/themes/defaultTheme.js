@@ -1,11 +1,13 @@
 import { createMuiTheme } from '@material-ui/core/styles';
-import purple from '@material-ui/core/colors/purple';
+import red from '@material-ui/core/colors/red';
 import orange from '@material-ui/core/colors/orange';
 
 
 const defaultTheme = createMuiTheme({
   palette: {
-    primary: purple,
+    primary: {
+      main: "#d91b00"
+    },
     secondary: orange,
   },
   status: {

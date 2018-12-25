@@ -17,13 +17,12 @@ class SBPage extends Component {
 
   }
 
-
   render() {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
         <Paper className={classes.tablePaper}>
-
+          
         </Paper>
         <CssBaseline />
       </div>
